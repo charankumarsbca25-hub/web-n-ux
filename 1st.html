@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Two Column Layout</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Comic Sans MS, cursive;
+      background: linear-gradient(45deg, hotpink, yellow, lime, cyan, orange);
+      background-size: 400% 400%;
+      animation: bgmove 10s infinite alternate;
+    }
+
+    @keyframes bgmove {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .left, .right {
+      float: left;
+      width: 50%;
+      padding: 40px;
+      color: white;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 2px 2px 6px black;
+    }
+
+    .left {
+      background: rgba(255,0,0,0.6);
+    }
+
+    .right {
+      background: rgba(0,0,255,0.6);
+    }
+
+    h2 {
+      font-size: 40px;
+      animation: spin 3s infinite linear;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+
+    /* Clearfix */
+    .container::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <h2>Left Column</h2>
+      <p>This side has bold red styling.</p>
+    </div>
+
+    <div class="right">
+      <h2>Right Column</h2>
+      <p>This side has cool blue styling.</p>
+    </div>
+  </div>
+
+</body>
+</html>
+
