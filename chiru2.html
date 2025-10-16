@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DOM Manipulation — Colorful Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      --primary-color: #4f46e5;
+      --secondary-color: #10b981;
+      --bg-color: #f0f4f8;
+      --card-color-1: #fff0f6;
+      --card-color-2: #f0fff4;
+      --card-color-3: #fffbea;
+      --btn-color-1: #4f46e5;
+      --btn-color-2: #10b981;
+      --btn-hover-1: #4338ca;
+      --btn-hover-2: #0f766e;
+      --highlight-color: rgba(255, 230, 150, 0.6);
+    }
+
+    body {
+      max-width: 900px;
+      margin: 32px auto;
+      padding: 16px;
+      background-color: var(--bg-color);
+      color: #1f2937;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      background: linear-gradient(90deg, #4f46e5, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header small {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:nth-child(odd) { background-color: var(--card-color-1); }
+    .card:nth-child(even) { background-color: var(--card-color-2); }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.2s;
+      color: #fff;
+    }
+
+    #changeTextBtn, #applyHeading, #addItem {
+      background-color: var(--btn-color-1);
+    }
+
+    #changeTextBtn:hover, #applyHeading:hover, #addItem:hover {
+      background-color: var(--btn-hover-1);
+    }
+
+    #clearList, #createImgBtn, #toggleBtn {
+      background-color: var(--btn-color-2);
+    }
+
+    #clearList:hover, #createImgBtn:hover, #toggleBtn:hover {
+      background-color: var(--btn-hover-2);
+    }
+
+    input[type=text] {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-right: 8px;
+      font-family: inherit;
+    }
+
+    .highlight {
+      background: linear-gradient(90deg, var(--highlight-color), rgba(255,255,255,0));
+      border-radius: 6px;
+      padding: 2px 6px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    #createdArea img {
+      display: block;
+      margin-top: 8px;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>DOM Manipulation — Colorful Demo</h1>
+    <small>Practice: create / update / remove elements & attributes</small>
+  </header>
+
+  <section class="card" id="textCard">
+    <h2>Update text content</h2>
+    <p id="intro">This text will be changed when you click the button below.</p>
+    <button id="changeTextBtn">Change text</button>
+  </section>
+
+  <section class="card" id="inputCard">
+    <h2>Use input to update DOM</h2>
+    <label>
+      New heading: <input type="text" id="headingInput" placeholder="Type a new heading" />
+    </label>
+    <button id="applyHeading">Apply</button>
+    <h3 id="liveHeading">Original heading</h3>
+  </section>
+
+  <section class="card" id="listCard">
+    <h2>Manage a list</h2>
+    <input type="text" id="itemInput" placeholder="New todo item" />
+    <button id="addItem">Add item</button>
+    <button id="clearList">Clear list</button>
+    <ul id="todoList">
+      <li>Example item 1 <button class="remove">Remove</button></li>
+      <li>Example item 2 <button class="remove">Remove</button></li>
+    </ul>
+  </section>
+
+  <section class="card" id="createCard">
+    <h2>Create element & attributes</h2>
+    <button id="createImgBtn">Create image element</button>
+    <div id="createdArea"></div>
+  </section>
+
+  <section class="card" id="toggleCard">
+    <h2>Toggle classes & attributes</h2>
+    <p id="togText">Click the toggle button to highlight this paragraph.</p>
+    <button id="toggleBtn">Toggle highlight</button>
+  </section>
+
+  <script>
+    const $ = (sel, ctx=document) => ctx.querySelector(sel);
+
+    $('#changeTextBtn').addEventListener('click', () => {
+      $('#intro').textContent = 'Text has been updated at ' + new Date().toLocaleTimeString();
+    });
+
+    $('#applyHeading').addEventListener('click', () => {
+      const val = $('#headingInput').value.trim();
+      $('#liveHeading').textContent = val || 'Original heading';
+    });
+
+    const todoList = $('#todoList');
+    $('#addItem').addEventListener('click', () => {
+      const text = $('#itemInput').value.trim();
+      if(!text) return;
+      const li = document.createElement('li');
+      li.innerHTML = `${escapeHtml(text)} <button class="remove">Remove</button>`;
+      todoList.appendChild(li);
+      $('#itemInput').value = '';
+    });
+
+    $('#clearList').addEventListener('click', () => {
+      while(todoList.firstChild) todoList.firstChild.remove();
+    });
+
+    todoList.addEventListener('click', e => {
+      if(e.target.matches('button.remove')) e.target.closest('li').remove();
+    });
+
+    $('#createImgBtn').addEventListener('click', () => {
+      const area = $('#createdArea');
+      const existing = area.querySelector('img');
+      if(existing) { existing.remove(); return; }
+      const img = document.createElement('img');
+      img.src = 'https://placekitten.com/320/180';
+      img.alt = 'Cute placeholder';
+      img.width = 320;
+      img.height = 180;
+      area.appendChild(img);
+    });
+
+    $('#toggleBtn').addEventListener('click', () => {
+      $('#togText').classList.toggle('highlight');
+    });
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    $('#itemInput').addEventListener('keydown', e => {
+      if(e.key==='Enter'){ e.preventDefault(); $('#addItem').click(); }
+    });
+  </script>
+</body>
+</html>
