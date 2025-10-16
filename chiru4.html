@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event Handling — Interactive Demo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 40px auto; max-width: 800px; padding: 16px; }
+    h1 { color: #333; }
+    .card { border: 1px solid #ddd; padding: 16px; border-radius: 8px; margin-top: 16px; }
+    button, input[type="text"], input[type="email"] { padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+    button { cursor: pointer; }
+    .error { color: #c00; font-weight: bold; }
+    .success { color: #090; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Event Handling: Clicks, Keypresses & Form Validation</h1>
+
+  <!-- Section 1: Click Event -->
+  <section class="card">
+    <h2>Click Event Example</h2>
+    <button id="clickMe">Click Me!</button>
+    <p id="clickMessage">No clicks yet.</p>
+  </section>
+
+  <!-- Section 2: Keypress Event -->
+  <section class="card">
+    <h2>Keypress Event Example</h2>
+    <input type="text" id="keypressInput" placeholder="Type something...">
+    <p id="keyOutput">Keys pressed: none</p>
+  </section>
+
+  <!-- Section 3: Form Validation -->
+  <section class="card">
+    <h2>Form Validation Example</h2>
+    <form id="signupForm">
+      <label>Name: <input type="text" id="name" required></label><br><br>
+      <label>Email: <input type="email" id="email" required></label><br><br>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="formMessage"></p>
+  </section>
+
+  <!-- Section 4: Mouse Events -->
+  <section class="card">
+    <h2>Mouse Events Example</h2>
+    <div id="hoverBox" style="width:200px; height:100px; background:#eef; display:flex; align-items:center; justify-content:center; border-radius:8px;">
+      Hover over me!
+    </div>
+    <p id="hoverMessage">No hover detected.</p>
+  </section>
+
+  <script>
+    // --- Click Event ---
+    let clickCount = 0;
+    document.getElementById('clickMe').addEventListener('click', () => {
+      clickCount++;
+      document.getElementById('clickMessage').textContent = Button clicked ${clickCount} time${clickCount > 1 ? 's' : ''};
+    });
+
+    // --- Keypress Event ---
+    const input = document.getElementById('keypressInput');
+    const output = document.getElementById('keyOutput');
+    input.addEventListener('keydown', (event) => {
+      output.textContent = Key pressed: ${event.key};
+    });
+
+    // --- Form Validation ---
+    const form = document.getElementById('signupForm');
+    const msg = document.getElementById('formMessage');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // stop form from reloading the page
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!name || !email) {
+        msg.textContent = 'All fields are required!';
+        msg.className = 'error';
+        return;
+      }
+
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        msg.textContent = 'Please enter a valid email address!';
+        msg.className = 'error';
+        return;
+      }
+
+      msg.textContent = Welcome, ${name}! Your email (${email}) has been recorded.;
+      msg.className = 'success';
+      form.reset();
+    });
+
+    // --- Mouse Events ---
+    const box = document.getElementById('hoverBox');
+    const hoverMsg = document.getElementById('hoverMessage');
+
+    box.addEventListener('mouseenter', () => {
+      hoverMsg.textContent = 'Mouse entered the box!';
+      box.style.background = '#cce5ff';
+    });
+
+    box.addEventListener('mouseleave', () => {
+      hoverMsg.textContent = 'Mouse left the box!';
+      box.style.background = '#eef';
+    });
+
+    // Optional: double-click event
+    box.addEventListener('dblclick', () => {
+      hoverMsg.textContent = 'Box double-clicked!';
+      box.style.background = '#aaf';
+    });
+  </script>
+</body>
+</html>
