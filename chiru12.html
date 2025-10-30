@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Guide - After 10th & 2nd PUC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #c9d6ff, #e2e2e2);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #004aad;
+      color: white;
+      padding: 15px;
+      font-size: 24px;
+    }
+    section {
+      margin: 20px auto;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      width: 85%;
+      max-width: 700px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    button {
+      background: #004aad;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0066ff;
+    }
+    ul { text-align: left; display: inline-block; }
+  </style>
+</head>
+<body>
+
+  <header>🎓 Career Guide After 10th & 2nd PUC</header>
+
+  <section>
+    <h2>About</h2>
+    <p>This webpage helps students explore the best career options available after completing 10th and 2nd PUC.</p>
+  </section>
+
+  <section>
+    <h2>After 10th</h2>
+    <ul>
+      <li><b>Science Stream:</b> For careers in Engineering, Medicine, Research.</li>
+      <li><b>Commerce Stream:</b> For careers in Business, Finance, Accounting.</li>
+      <li><b>Arts / Humanities:</b> For careers in Journalism, Law, Design, Civil Services.</li>
+      <li><b>Diploma Courses:</b> Technical education in fields like Computer, Mechanical, Civil, etc.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>After 2nd PUC</h2>
+    <ul>
+      <li><b>B.Sc, B.Com, B.A:</b> Degree programs in various specializations.</li>
+      <li><b>Engineering (B.E/B.Tech):</b> For Science students.</li>
+      <li><b>MBBS / Nursing / Pharmacy:</b> For students interested in Medicine.</li>
+      <li><b>Professional Courses:</b> CA, CS, BBA, Law, Design, etc.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Need Help Choosing?</h2>
+    <p>Click the button below for a motivational tip!</p>
+    <button onclick="showTip()">Get Tip</button>
+    <p id="tip" style="font-weight:bold; color:#004aad;"></p>
+  </section>
+
+  <script>
+    function showTip() {
+      const tips = [
+        "Choose a stream that matches your interest, not pressure.",
+        "Explore, ask questions, and stay curious!",
+        "Success comes when passion meets hard work.",
+        "No stream is small — every field needs experts!"
+      ];
+      const random = Math.floor(Math.random() * tips.length);
+      document.getElementById("tip").innerHTML = tips[random];
+    }
+  </script>
+
+</body>
+</html>
