@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Charankumar S | Personal Webpage</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #00bcd4;
+      letter-spacing: 2px;
+      animation: fadeIn 2s ease;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #ccc;
+      animation: fadeIn 3s ease;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    h2 {
+      color: #00bcd4;
+      border-bottom: 2px solid #00bcd4;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .info p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    .hobbies {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .hobby {
+      background: rgba(0, 188, 212, 0.1);
+      border: 1px solid #00bcd4;
+      padding: 15px 20px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .hobby:hover {
+      background: #00bcd4;
+      color: #111;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    button {
+      background: #00bcd4;
+      border: none;
+      color: #111;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #fff;
+      color: #00bcd4;
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Charankumar S</h1>
+    <p>Bachelor of Computer Applications (BCA) Student</p>
+  </header>
+
+  <div class="container">
+    <section class="info">
+      <h2>About Me</h2>
+      <p>Hello! I'm <strong>Charankumar S</strong>, a passionate and hardworking student currently pursuing my <strong>BCA</strong>. I’m always curious about how technology shapes the world around us and love learning new things every day.</p>
+    </section>
+
+    <section class="info">
+      <h2>Academic Details</h2>
+      <p>🎓 <strong>10th Grade:</strong> 97%</p>
+      <p>🎓 <strong>2nd PUC:</strong> 95%</p>
+      <p>💻 <strong>Currently Pursuing:</strong> Bachelor of Computer Applications (BCA)</p>
+    </section>
+
+    <section class="info">
+      <h2>Hobbies</h2>
+      <div class="hobbies">
+        <div class="hobby">Listening to Music 🎧</div>
+        <div class="hobby">Exploring Tech 💻</div>
+        <div class="hobby">Learning New Skills 📘</div>
+        <div class="hobby">Creative Thinking 💡</div>
+      </div>
+    </section>
+
+    <section class="info">
+      <h2>Interactive Section</h2>
+      <p>Click the button below to see a motivational message!</p>
+      <button onclick="showMessage()">Click Me!</button>
+      <p id="message" style="margin-top: 15px; font-weight: bold; color: #00e676;"></p>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Charankumar S | Designed with ❤️ using HTML, CSS & JavaScript</p>
+  </footer>
+
+  <script>
+    function showMessage() {
+      const messages = [
+        "Keep learning, keep growing!",
+        "You’re doing amazing, Charankumar!",
+        "Success comes to those who never give up 💪",
+        "Believe in yourself and code your future 🚀"
+      ];
+      const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+      document.getElementById("message").textContent = randomMsg;
+    }
+  </script>
+</body>
+</html>
