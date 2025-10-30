@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALL CLOTHS — Modern Clothing Store</title>
+  <style>
+    /* --- Root colors and variables --- */
+    :root {
+      --bg: #f0f4ff;
+      --card: #f3ecec;
+      --accent: #695acd57;        /* violet-blue accent */
+      --accent2: #a9334bd1;       /* pink secondary */
+      --muted: #424a54;
+      --text: #1a1a1a;
+      --gradient: linear-gradient(135deg, var(--accent), var(--accent2));
+      --glass: rgba(255,255,255,0.7);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; transition: all 0.25s ease; }
+
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #fff);
+      color: var(--text);
+    }
+
+    /* --- Header --- */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    #openCart {
+      margin-left: 14px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: var(--gradient);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* --- Hero section --- */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 28px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+
+    .hero-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: var(--gradient);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .cta:hover { transform: translateY(-2px); }
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .filters select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #fafafa;
+      font-weight: 500;
+    }
+
+    .preview {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .preview img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    /* --- Product grid --- */
+    .grid {
+      max-width: 1200px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 22px;
+      padding: 0 24px 40px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .meta {
+      padding: 10px 6px;
+      flex: 1;
+    }
+
+    .title { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+    .price { color: var(--accent2); font-weight: 800; }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #ddd;
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-cart {
+      background: var(--gradient);
+      color: #fff;
+    }
+
+    .btn-cart:hover { opacity: 0.9; }
+
+    footer {
+      background: var(--gradient);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    /* --- Modal --- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      background: var(--card);
+      padding: 20px;
+      border-radius: var(--radius);
+      width: 420px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      animation: pop 0.3s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .cart-list {
+      max-height: 260px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .small-img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 14px; }
+      .preview img { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">AC</div>
+      <div>
+        <div style="font-weight:800">ALL CLOTHS</div>
+        <div style="font-size:12px;color:var(--muted)">Modern • Affordable • Comfortable</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#products">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button id="openCart">Cart (0)</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Wear Your Confidence — Every Day</h1>
+        <p>Discover styles that feel as good as they look. Free shipping on orders above ₹999.</p>
+        <a class="cta" href="#products">Shop Now</a>
+        <div class="filters">
+          <select id="category">
+            <option value="all">All categories</option>
+            <option value="men">Men</option>
+            <option value="women">Women</option>
+            <option value="kids">Kids</option>
+          </select>
+          <select id="sort">
+            <option value="popular">Most popular</option>
+            <option value="new">Newest</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preview">
+        <img src="https://images.unsplash.com/photo-1520975912060-0f13b2b8a3f0?q=80&w=1200&auto=format&fit=crop" alt="preview">
+      </div>
+    </section>
+
+    <section id="products" class="grid"></section>
+  </main>
+
+  <footer>
+    © 2025 ALL CLOTHS — Crafted with care & style 💜
+  </footer>
+
+  <div id="modal" class="modal-backdrop">
+    <div class="modal">
+      <h3>Your Cart</h3>
+      <div class="cart-list" id="cartList">No items yet.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <strong id="cartTotal">Total: ₹0</strong>
+        <div>
+          <button id="closeModal" class="btn-outline">Continue</button>
+          <button id="checkout" class="btn-cart">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PRODUCTS = [
+      {id:1,title:'Essential Tee',price:399,tag:'men',img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop'},
+      {id:2,title:'Everyday Hoodie',price:1299,tag:'women',img:'https://images.unsplash.com/photo-1602810317141-0a3e6f2d8d6e?q=80&w=800&auto=format&fit=crop'},
+      {id:3,title:'Classic Shirt',price:899,tag:'men',img:'https://images.unsplash.com/photo-1530845643428-6da63fb45458?q=80&w=800&auto=format&fit=crop'},
+      {id:4,title:'Summer Dress',price:1499,tag:'women',img:'https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=800&auto=format&fit=crop'},
+      {id:5,title:'Kids Polo',price:499,tag:'kids',img:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop'},
+      {id:6,title:'Chill Shorts',price:599,tag:'men',img:'https://images.unsplash.com/photo-1520975912060-0f13b2b8a3f0?q=80&w=800&auto=format&fit=crop'}
+    ];
+
+    const grid = document.getElementById('products');
+    const category = document.getElementById('category');
+    const sort = document.getElementById('sort');
+    const openCart = document.getElementById('openCart');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const cartList = document.getElementById('cartList');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkout = document.getElementById('checkout');
+
+    let CART = {};
+
+    function renderProducts() {
+      grid.innerHTML = '';
+      let items = PRODUCTS.slice();
+      const cat = category.value;
+      if(cat !== 'all') items = items.filter(p=>p.tag===cat);
+      const s = sort.value;
+      if(s==='low') items.sort((a,b)=>a.price-b.price);
+      if(s==='high') items.sort((a,b)=>b.price-a.price);
+      if(s==='new') items.reverse();
+
+      items.forEach(p=>{
+        const card = document.createElement('div');
+        card.className='card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <div class="meta">
+            <div class="title">${p.title}</div>
+            <div style="color:var(--muted);font-size:13px">${p.tag.toUpperCase()}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div class="price">₹${p.price}</div>
+              <div class="actions">
+                <button class="btn-outline" onclick="quickView(${p.id})">Quick</button>
+                <button class="btn-cart" onclick="addToCart(${p.id})">Add</button>
+              </div>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function addToCart(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!CART[id]) CART[id] = {...p, qty:0};
+      CART[id].qty += 1;
+      updateCartUI();
+      openModal();
+    }
+
+    function updateCartUI(){
+      const items = Object.values(CART);
+      const count = items.reduce((s,i)=>s+i.qty,0);
+      openCart.textContent = `Cart (${count})`;
+      if(items.length===0){
+        cartList.innerHTML = 'No items yet.';
+        cartTotal.textContent='Total: ₹0';
+        return;
+      }
+      cartList.innerHTML = '';
+      let total = 0;
+      items.forEach(i=>{
+        total += i.price * i.qty;
+        const el = document.createElement('div');
+        el.className='cart-item';
+        el.innerHTML = `<img class="small-img" src="${i.img}" alt="${i.title}">
+          <div style="flex:1"><strong>${i.title}</strong>
+          <div style="font-size:13px;color:var(--muted)">₹${i.price} × ${i.qty}</div></div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button onclick="changeQty(${i.id},1)">+</button>
+            <button onclick="changeQty(${i.id},-1)">-</button>
+          </div>`;
+        cartList.appendChild(el);
+      });
+      cartTotal.textContent = `Total: ₹${total}`;
+    }
+
+    function changeQty(id,delta){
+      if(!CART[id]) return;
+      CART[id].qty += delta;
+      if(CART[id].qty <= 0) delete CART[id];
+      updateCartUI();
+    }
+
+    function quickView(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      alert(`${p.title} — ₹${p.price}`);
+    }
+
+    function openModal(){ modal.style.display='flex'; }
+    function closeModalFn(){ modal.style.display='none'; }
+
+    openCart.addEventListener('click',openModal);
+    closeModal.addEventListener('click',closeModalFn);
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModalFn() });
+    checkout.addEventListener('click',()=>{ alert('Checkout — This is a demo.'); CART = {}; updateCartUI(); closeModalFn(); });
+
+    category.addEventListener('change',renderProducts);
+    sort.addEventListener('change',renderProducts);
+
+    renderProducts();
+    updateCartUI();
+  </script>
+</body>
+</html>
