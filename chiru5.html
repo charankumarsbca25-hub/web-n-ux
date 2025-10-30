@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ALL CLOTHS — Shop</title>
+  <style>
+    :root{--bg:#f7f7fb;--card:#ffffff;--accent:#ff6b6b;--muted:#6b7280;--glass:rgba(255,255,255,0.6)}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial; margin:0; background:linear-gradient(180deg,var(--bg),#fff); color:#111}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent;position:sticky;top:0;backdrop-filter:blur(6px);z-index:10}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#ffb199);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    nav a{margin-left:18px;text-decoration:none;color:var(--muted);font-weight:600}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;max-width:1200px;margin:28px auto;padding:24px}
+    .hero-card{background:var(--card);border-radius:14px;padding:28px;box-shadow:0 6px 24px rgba(15,15,15,0.06)}
+    .hero h1{margin:0 0 12px;font-size:34px}
+    .hero p{color:var(--muted);margin:0 0 20px}
+    .cta{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+    .filters{display:flex;gap:10px;margin-top:18px}
+    .filters select{padding:8px;border-radius:8px;border:1px solid #eee}
+    .preview{background:linear-gradient(180deg,#fff, #fff);border-radius:14px;padding:18px;display:flex;align-items:center;justify-content:center}
+    .preview img{width:100%;height:340px;object-fit:cover;border-radius:10px}
+    .grid{max-width:1200px;margin:18px auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;padding:18px}
+    .card{background:var(--card);border-radius:12px;padding:12px;box-shadow:0 6px 18px rgba(12,12,12,0.06);display:flex;flex-direction:column}
+    .card img{width:100%;height:200px;object-fit:cover;border-radius:8px}
+    .meta{padding:10px 4px;flex:1;display:flex;flex-direction:column}
+    .title{font-weight:700;margin-bottom:6px}
+    .price{color:var(--accent);font-weight:800}
+    .actions{display:flex;gap:8px;margin-top:10px}
+    button{cursor:pointer;border:0;padding:10px 12px;border-radius:8px;font-weight:700}
+    .btn-outline{background:transparent;border:1px solid #eee}
+    .btn-cart{background:var(--accent);color:#fff}
+    footer{max-width:1200px;margin:30px auto;padding:18px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center}
+    .modal{background:var(--card);padding:18px;border-radius:12px;width:420px;box-shadow:0 20px 50px rgba(3,3,3,0.25)}
+    .cart-list{max-height:260px;overflow:auto;margin-top:8px}
+    .cart-item{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed #eee}
+    .small-img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr; padding:12px}
+      .hero img{height:260px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">AC</div>
+      <div>
+        <div style="font-weight:800">ALL CLOTHS</div>
+        <div style="font-size:12px;color:var(--muted)">Modern • Affordable • Comfortable</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#products">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button id="openCart" style="margin-left:12px;padding:8px 12px;border-radius:8px;background:transparent;border:1px solid #eee">Cart (0)</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="hero">
+      <div class="hero-card">
+        <h1>Wear your confidence — every day.</h1>
+        <p>Modern styles, comfortable fabrics and prices you'll love. Free shipping on orders over ₹999.</p>
+        <a class="cta" href="#products">Shop Now</a>
+
+        <div class="filters">
+          <select id="category">
+            <option value="all">All categories</option>
+            <option value="men">Men</option>
+            <option value="women">Women</option>
+            <option value="kids">Kids</option>
+          </select>
+          <select id="sort">
+            <option value="popular">Most popular</option>
+            <option value="new">Newest</option>
+            <option value="low">Price: Low → High</option>
+            <option value="high">Price: High → Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="preview">
+        <img src="https://images.unsplash.com/photo-1520975912060-0f13b2b8a3f0?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="preview">
+      </div>
+    </section>
+
+    <section id="products" class="grid" aria-label="products">
+      <!-- product cards injected by JS for easy editing -->
+    </section>
+  </main>
+
+  <footer>
+    <div>© ALL CLOTHS — Crafted with care</div>
+    <div>Made for small shops • Simple demo</div>
+  </footer>
+
+  <!-- modal -->
+  <div id="modal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal">
+      <h3>Your cart</h3>
+      <div class="cart-list" id="cartList">No items yet.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <strong id="cartTotal">Total: ₹0</strong>
+        <div>
+          <button id="closeModal" class="btn-outline">Continue shopping</button>
+          <button id="checkout" class="btn-cart">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- sample product data ---
+    const PRODUCTS = [
+      {id:1,title:'Essential Tee',price:399,tag:'men',img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:2,title:'Everyday Hoodie',price:1299,tag:'women',img:'https://images.unsplash.com/photo-1602810317141-0a3e6f2d8d6e?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:3,title:'Classic Shirt',price:899,tag:'men',img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:4,title:'Summer Dress',price:1499,tag:'women',img:'https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:5,title:'Kids Polo',price:499,tag:'kids',img:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:6,title:'Chill Shorts',price:599,tag:'men',img:'https://images.unsplash.com/photo-1520975912060-0f13b2b8a3f0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'}
+    ];
+
+    const grid = document.getElementById('products');
+    const category = document.getElementById('category');
+    const sort = document.getElementById('sort');
+    const openCart = document.getElementById('openCart');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const cartList = document.getElementById('cartList');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkout = document.getElementById('checkout');
+
+    let CART = {};
+
+    function renderProducts(){
+      grid.innerHTML = '';
+      let items = PRODUCTS.slice();
+      const cat = category.value;
+      if(cat !== 'all') items = items.filter(p=>p.tag===cat);
+      const s = sort.value;
+      if(s==='low') items.sort((a,b)=>a.price-b.price);
+      if(s==='high') items.sort((a,b)=>b.price-a.price);
+      if(s==='new') items.reverse();
+
+      items.forEach(p=>{
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <div class="meta">
+            <div class="title">${p.title}</div>
+            <div style="color:var(--muted);font-size:13px">${p.tag.toUpperCase()}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+              <div class="price">₹${p.price}</div>
+              <div class="actions">
+                <button class="btn-outline" onclick="quickView(${p.id})">Quick</button>
+                <button class="btn-cart" onclick="addToCart(${p.id})">Add</button>
+              </div>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function addToCart(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!CART[id]) CART[id] = {...p, qty:0};
+      CART[id].qty += 1;
+      updateCartUI();
+      openModal();
+    }
+
+    function updateCartUI(){
+      const items = Object.values(CART);
+      const count = items.reduce((s,i)=>s+i.qty,0);
+      openCart.textContent = `Cart (${count})`;
+      if(items.length===0){ cartList.innerHTML = 'No items yet.'; cartTotal.textContent='Total: ₹0'; return }
+      cartList.innerHTML = '';
+      let total = 0;
+      items.forEach(i=>{
+        total += i.price * i.qty;
+        const el = document.createElement('div'); el.className='cart-item';
+        el.innerHTML = `<img class="small-img" src="${i.img}" alt="${i.title}"><div style="flex:1"><strong>${i.title}</strong><div style="font-size:13px;color:var(--muted)">₹${i.price} × ${i.qty}</div></div><div style="display:flex;flex-direction:column;gap:6px"><button onclick="changeQty(${i.id},1)">+</button><button onclick="changeQty(${i.id},-1)">-</button></div>`;
+        cartList.appendChild(el);
+      });
+      cartTotal.textContent = `Total: ₹${total}`;
+    }
+
+    function changeQty(id,delta){
+      if(!CART[id]) return;
+      CART[id].qty += delta;
+      if(CART[id].qty <= 0) delete CART[id];
+      updateCartUI();
+    }
+
+    function quickView(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      alert(`${p.title} — ₹${p.price}`);
+    }
+
+    function openModal(){ modal.style.display='flex' }
+    function closeModalFn(){ modal.style.display='none' }
+
+    openCart.addEventListener('click',openModal);
+    closeModal.addEventListener('click',closeModalFn);
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModalFn() });
+    checkout.addEventListener('click',()=>{ alert('Checkout — This is a demo.'); CART = {}; updateCartUI(); closeModalFn(); });
+
+    category.addEventListener('change',renderProducts);
+    sort.addEventListener('change',renderProducts);
+
+    // initial render
+    renderProducts();
+    updateCartUI();
+  </script>
+</body>
+</html>
