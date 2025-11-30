@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SkillSwap Pro</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        background: #f5f3ff;
+        color: #1e1b4b;
+    }
+
+    header {
+        background: #4c1d95;
+        color: white;
+        padding: 20px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    nav a {
+        margin-left: 25px;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 0.3s;
+        padding: 8px 14px;
+        border-radius: 6px;
+    }
+
+    nav a:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    .hero {
+        padding: 80px 25px;
+        text-align: center;
+        background: linear-gradient(135deg, #6d28d9, #7c3aed, #a855f7);
+        color: white;
+        border-bottom-left-radius: 100px;
+        border-bottom-right-radius: 100px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .hero h2 {
+        font-size: 42px;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        max-width: 950px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        animation: fade 0.4s ease-in-out;
+    }
+
+    @keyframes fade {
+        from {opacity: 0; transform: translateY(15px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .skill-card {
+        border: 1px solid #e9d5ff;
+        padding: 18px;
+        border-radius: 16px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+        background: #faf5ff;
+    }
+
+    .skill-card:hover {
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+        transform: translateY(-3px);
+    }
+
+    .skill-card h3 {
+        margin: 0 0 8px 0;
+        color: #5b21b6;
+    }
+
+    .btn-primary {
+        background: #6d28d9;
+        color: white;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.3s;
+        margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+        background: #4c1d95;
+    }
+
+    .btn-danger {
+        background: #e11d48;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        float: right;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #c7d2fe;
+        margin: 10px 0;
+        font-size: 15px;
+    }
+
+    .search-box {
+        padding: 12px;
+        width: 100%;
+        border: 2px solid #a78bfa;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 25px;
+        margin-top: 50px;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    /* Popup */
+    #login-popup {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        backdrop-filter: blur(6px);
+        background: rgba(0,0,0,0.3);
+        justify-content: center;
+        align-items: center;
+        z-index: 30;
+    }
+
+    .login-box {
+        background: white;
+        padding: 30px;
+        border-radius: 18px;
+        width: 320px;
+        box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+        animation: pop 0.3s ease-in-out;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>SkillSwap Pro</h1>
+    <nav>
+        <a onclick="showSection('home')">Home</a>
+        <a onclick="showSection('explore')">Explore</a>
+        <a onclick="showSection('post')">Post Skill</a>
+        <a onclick="openLogin()">Login</a>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <h2>Trade Skills. Learn Anything.</h2>
+    <p>Teach what you know, learn what you need — completely free.</p>
+</section>
+
+<div id="explore" class="container" style="display:none;">
+    <h2>Available Skills</h2>
+
+    <input class="search-box" id="search" placeholder="Search skills..." onkeyup="searchSkills()"/>
+
+    <div id="skills-list"></div>
+</div>
+
+<div id="post" class="container" style="display:none;">
+    <h2>Post Your Skill</h2>
+
+    <input id="title" placeholder="Skill Title" />
+    <input id="offers" placeholder="What you offer (e.g. Guitar)" />
+    <input id="wants" placeholder="What you want (e.g. Photoshop)" />
+    <textarea id="desc" placeholder="Short description"></textarea>
+
+    <button class="btn-primary" onclick="postSkill()">Post Skill</button>
+</div>
+
+<!-- LOGIN POPUP -->
+<div id="login-popup">
+    <div class="login-box">
+        <h3 style="text-align:center;">Login</h3>
+        <input id="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+        <button class="btn-primary" style="width:100%;" onclick="login()">Login</button>
+        <p style="text-align:center; margin-top:12px; cursor:pointer; color:#4c1d95;" onclick="closeLogin()">Cancel</p>
+    </div>
+</div>
+
+<footer>
+    SkillSwap © 2025 — Learn & Grow Together
+</footer>
+
+<script>
+    let loggedIn = localStorage.getItem("loggedIn") === "true";
+
+    let skills = JSON.parse(localStorage.getItem("skills")) || [
+        { title: "Guitar Basics", offers: "Guitar", wants: "Photoshop", desc: "I teach chords & strumming." },
+        { title: "Photoshop Beginner", offers: "Photoshop", wants: "Guitar", desc: "Basics and tools." }
+    ];
+
+    function showSection(id) {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("explore").style.display = "none";
+        document.getElementById("post").style.display = "none";
+        document.getElementById(id).style.display = "block";
+
+        if (id === "explore") renderSkills();
+    }
+
+    function renderSkills() {
+        const list = document.getElementById("skills-list");
+        list.innerHTML = "";
+
+        skills.forEach((s, index) => {
+            list.innerHTML += `
+                <div class="skill-card">
+                    <button class="btn-danger" onclick="deleteSkill(${index})">Delete</button>
+                    <h3>${s.title}</h3>
+                    <p><strong>Offers:</strong> ${s.offers}</p>
+                    <p><strong>Wants:</strong> ${s.wants}</p>
+                    <p>${s.desc}</p>
+                </div>
+            `;
+        });
+    }
+
+    function searchSkills() {
+        let q = document.getElementById("search").value.toLowerCase();
+        const list = document.getElementById("skills-list");
+        list.innerHTML = "";
+
+        skills
+            .filter(s => s.title.toLowerCase().includes(q) || s.offers.toLowerCase().includes(q))
+            .forEach((s, index) => {
+                list.innerHTML += `
+                    <div class="skill-card">
+                        <button class="btn-danger" onclick="deleteSkill(${index})">Delete</button>
+                        <h3>${s.title}</h3>
+                        <p><strong>Offers:</strong> ${s.offers}</p>
+                        <p><strong>Wants:</strong> ${s.wants}</p>
+                        <p>${s.desc}</p>
+                    </div>
+                `;
+            });
+    }
+
+    function postSkill() {
+        if (!loggedIn) {
+            alert("Please login to post a skill.");
+            return openLogin();
+        }
+
+        const title = document.getElementById("title").value;
+        const offers = document.getElementById("offers").value;
+        const wants = document.getElementById("wants").value;
+        const desc = document.getElementById("desc").value;
+
+        if (!title || !offers) return alert("Please fill required fields!");
+
+        skills.push({ title, offers, wants, desc });
+        localStorage.setItem("skills", JSON.stringify(skills));
+
+        alert("Skill Posted!");
+        showSection("explore");
+    }
+
+    function deleteSkill(i) {
+        skills.splice(i, 1);
+        localStorage.setItem("skills", JSON.stringify(skills));
+        renderSkills();
+    }
+
+    function openLogin() {
+        document.getElementById("login-popup").style.display = "flex";
+    }
+
+    function closeLogin() {
+        document.getElementById("login-popup").style.display = "none";
+    }
+
+    function login() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) return alert("Enter login details!");
+
+        loggedIn = true;
+        localStorage.setItem("loggedIn", "true");
+
+        closeLogin();
+        alert("Login Successful!");
+    }
+</script>
+
+</body>
+</html>
